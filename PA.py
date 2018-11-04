@@ -97,34 +97,40 @@ def InitValue(x0,y0):
 	
 ni = 222
 mainplot = 	plt.subplot(221)
-def printPlot(x,y):
+def printPlot(x,y,title='none'):
 	global ni,mainplot
 	x = np.array(x)
 	y = np.array(y)
-	plt.subplot(ni)
+	p = plt.subplot(ni)
 	ni+=1
-	plt.plot(x,y)
+	p.plot(x,y,label=title)
+	p.legend()
+	leg = plt.legend(loc='best', ncol=2, mode="expand", shadow=False, fancybox=True)
+	leg.get_frame().set_alpha(0.5)
 	plt.grid(True)
 	mainplot.plot(x,y)
 
 def printOnePlote(x,y,title='none'):
 	plt.plot(x,y)
 	plt.title(title)
+	plt.legend()
 	plt.grid(True)
 	plt.show()
 
 InitValue(x0,y0)
 x,y = Euler(f,x0,y0,n,X)
-printPlot(x,y)
+printPlot(x,y,'Euler')
 #printOnePlote(x,y,'Euler')
 x,y = ImproveEuler(f,x0,y0,n,X)
-printPlot(x,y)
+printPlot(x,y,'ImproveEuler')
 #printOnePlote(x,y,'ImproveEuler')
 x,y = RungeKutta(f,x0,y0,n,X)
-printPlot(x,y)
+printPlot(x,y,'Runge-Kutta')
 #printOnePlote(x,y,'Runge-Kutta')
 
 #mainplot.title = 'Three methods'
 mainplot.grid(True)
+leg = plt.legend(loc='best', ncol=2, mode="expand", shadow=True, fancybox=True)
+leg.get_frame().set_alpha(0.5)
 plt.show()
 print(','.join(errList))
